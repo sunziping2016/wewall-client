@@ -8,7 +8,6 @@ function apple_emoji(dom) {
         find: apple_emoji_search,
         replace: (portion, match) => {
             if (portion.index) return '';
-            console.log(match.input.slice(match.startIndex, match.endIndex),match.input.slice(match.startIndex, match.endIndex).length);
             let name = punycode.ucs2.decode(match.input.slice(match.startIndex, match.endIndex)).map(x=>{
                 let name = ('0000' + x.toString(16)).slice(-5);
                 if (name[0] == 0)

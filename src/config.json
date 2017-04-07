@@ -2,7 +2,11 @@
   "default_server": "https://wx.sunziping.com/",
 
   "wall": {
-    "username": "wall",
+    "username": "wall-test",
+    "password": ""
+  },
+  "danmu": {
+    "username": "danmu-test",
     "password": ""
   }
 }

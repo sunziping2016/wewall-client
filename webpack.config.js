@@ -18,6 +18,9 @@ module.exports = {
         ],
         'wall': [
             path.resolve(src, 'wall/wall.jsx')
+        ],
+        'danmu': [
+            path.resolve(src, 'danmu/danmu.jsx')
         ]
     },
     output: {
@@ -26,6 +29,7 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     module: {
+        noParse: [/electron/],
         loaders: [ {
                 test: /\.(css)$/,
                 loader: production ? extract_css.extract({
@@ -39,7 +43,7 @@ module.exports = {
                 loader: 'babel-loader'
             }, {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name]-[hash].[ext]'
+                loader: 'url-loader?limit=10000&mimetype=applicatzion/font-woff&name=assets/fonts/[name]-[hash].[ext]'
             }, {
                 test: /\.(eot|svg|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: 'file-loader?name=assets/fonts/[name]-[hash].[ext]'
@@ -70,7 +74,16 @@ module.exports = {
                     removeComments: true
                 } : false
         }),
-        new CopyWebpackPlugin([{ from: 'static' }]),
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: path.resolve(src, 'danmu/index.html'),
+            chunks: ['danmu'],
+            filename: 'danmu/index.html',
+            minify: production ? {
+                    collapseWhitespace: true,
+                    removeComments: true
+                } : false
+        }),        new CopyWebpackPlugin([{ from: 'static' }]),
         ...(production ? [
                 extract_css,
                 new UglifyJSPlugin({

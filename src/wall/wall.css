@@ -59,7 +59,7 @@ html,body,#root,#wall {
     margin: -8px;
     vertical-align: middle;
 }
-#wall-msgs .apple-emoji {
+#wall-msgs .apple-emoji, #wall-msgs .emoji {
     height: 1.2em;
     display: inline-block;
     vertical-align: middle;

@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
 import config from '../config.json';
-import { LoginPanel, Wall, WallMessage, EmojiParser } from '../components/index';
-import './wall.css';
+import { LoginPanel, EmojiParser, Danmu } from '../components/index';
+import './danmu.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -46,8 +46,7 @@ class App extends React.Component {
                 this.messages.push({
                     msgid: msg.msgid,
                     content: msg.content,
-                    nickname: user && user.nickname,
-                    avatar: user.detailed && user && user.avatar
+                    color: `hsl(${360*Math.random()},100%,50%)`
                 });
             });
             this.forceUpdate();
@@ -59,6 +58,11 @@ class App extends React.Component {
             delete this.socket;
             this.setState({login:Object.assign({}, this.state.login, {state:false,error:data.error})});
         } else {
+            if (window.require) {
+                let win = window.require('electron').remote.getCurrentWindow();
+                win.setIgnoreMouseEvents(true);
+                win.setAlwaysOnTop(true);
+            }
             this.setState({
                 logined: true,
                 messages: []
@@ -80,31 +84,17 @@ class App extends React.Component {
                             }}
                 />
             );
-        let wall = (
-            <div id="wall">
-                <div id="main-content">
-                    <div id="wall-info">
-                        <h1>码上期中</h1>
-                    </div>
-                    <div id="wall-msgs">
-                        <div id="wall-counter">{this.state.counter}</div>
-                        <Wall maxMessages={3} messages={this.messages} onNewMessage={()=>this.setState({counter: this.state.counter+1})}>
-                            {msg =>
-                                <WallMessage message={msg}>
-                                    {content =>
-                                        <EmojiParser>
-                                            {content}
-                                        </EmojiParser>
-                                    }
-                                </WallMessage>
-                            }
-                        </Wall>
-                    </div>
-                </div>
-            </div>
+        let danmu = (
+            <Danmu messages={this.messages}>
+                {msg=>
+                    <EmojiParser className="danmu-message" style={{color:msg.color}}>
+                        {msg.content}
+                    </EmojiParser>
+                }
+            </Danmu>
         );
         this.messages = [];
-        return wall;
+        return danmu;
     }
 }
 
@@ -112,3 +102,7 @@ ReactDOM.render(
     <App />,
     document.getElementById('root')
 );
+
+//add_pending_messages([
+//    {msgid: 2183912, content: 'hello'}
+//]);
