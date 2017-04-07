@@ -39,7 +39,7 @@ class Wall extends React.Component {
             this.check_update();
     }
     check_update() {
-        if (this.messages_pending.length && !this.busy && this.props.maxMessages) {
+        if (this.messages_pending.length && !this.state.busy && this.props.maxMessages) {
             let new_message = this.messages_pending.splice(0,1)[0],
                 messages_active = this.state.messages_active.slice().map(v=>Object.assign({}, v));
             if (messages_active.length == this.props.maxMessages)
@@ -55,6 +55,19 @@ class Wall extends React.Component {
                 busy: true,
                 initial: true
             },() => setTimeout(() => this.setState({initial: false})));
+
+            setTimeout(() => {
+                let length = this.state.messages_active.length;
+                if (length && this.state.messages_active[length - 1].leaving)
+                    this.setState({
+                        messages_active: this.state.messages_active.slice(0, -1),
+                        busy: false
+                    }, () => this.check_update());
+                else
+                    this.setState({
+                        busy: false
+                    }, () => this.check_update());
+            }, 1000);
         }
     }
     componentWillReceiveProps(props) {
@@ -82,7 +95,8 @@ class Wall extends React.Component {
             const msg_spaceing = 15, msg_width = this.state.width - 150,
                 msg_height = (this.state.height - msg_spaceing * (this.props.maxMessages - 1)) / this.props.maxMessages,
                 msg_horizontal_delta = (this.state.width - msg_width) / (this.props.maxMessages - 1),
-                msg_vertical_delta = msg_height + msg_spaceing, initial_position = {x:-msg_width - msg_spaceing - 50,y:0},
+                msg_vertical_delta = msg_height + msg_spaceing,
+                initial_position = {x:-msg_width - msg_spaceing - 100,y:0},
                 leaving_position = {x:this.state.width + msg_spaceing + 20,y:this.state.height + msg_spaceing + 50};
 
             const initial = this.state.initial;
@@ -96,20 +110,6 @@ class Wall extends React.Component {
                     return {transform: `translate(${leaving_position.x}px,${leaving_position.y}px)`, transition: `transform 0.4s ease`};
                 return {transform: `translate(${index*msg_horizontal_delta}px,${index*msg_vertical_delta}px)`, transition: `transform 0.4s ease`};
             };
-            if (initial) {
-                setTimeout(() => {
-                    let length = this.state.messages_active.length;
-                    if (length && this.state.messages_active[length - 1].leaving)
-                        this.setState({
-                            messages_active: this.state.messages_active.slice(0, -1),
-                            busy: false
-                        }, () => this.check_update());
-                    else
-                        this.setState({
-                            busy: false
-                        }, () => this.check_update());
-                }, 1000);
-            }
             return (
                 <div id="wall-container">
                     {this.state.messages_active.map((msg,index) => (

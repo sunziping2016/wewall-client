@@ -6,6 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const src = path.resolve(__dirname, 'src');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const production = process.env.NODE_ENV == 'production';
 const extract_css = new ExtractTextPlugin('assets/stylesheet/[name]-[hash].css');
 
@@ -69,6 +70,7 @@ module.exports = {
                     removeComments: true
                 } : false
         }),
+        new CopyWebpackPlugin([{ from: 'static' }]),
         ...(production ? [
                 extract_css,
                 new UglifyJSPlugin({

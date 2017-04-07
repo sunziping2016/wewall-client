@@ -48,15 +48,28 @@ html,body,#root,#wall {
 
 #wall-msgs {
     flex-grow: 1;
-    margin: 20px 20px 20px 50px;
+    margin: 20px 20px 20px 80px;
     display: flex;
     align-items: stretch;
 }
 
+#wall-msgs .wechat-emoji {
+    height: calc(1em + 24px);
+    display: inline-block;
+    margin: -8px;
+    vertical-align: middle;
+}
+#wall-msgs .apple-emoji {
+    height: 1.2em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
 #wall-counter {
     left: 25px;
     bottom: 25px;
-    font-size: 100px;
+    font-size: 80px;
     font-family: ledFont;
     color: white;
     text-shadow: white 2px 2px 20px;

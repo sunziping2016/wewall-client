@@ -14,36 +14,13 @@ import config from '../config.json';
 import io from 'socket.io-client';
 
 
-import * as wechat_emoji from '../wechat-emoji/index';
-import wechat_emoji_mapping from '../wechat-emoji/encode-mapping.json';
-const wechat_emoji_search = new RegExp(Object.keys(wechat_emoji_mapping)
-    .map(x => x.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')).join('|'), 'g');
-
-import findAndReplaceDOMText from 'findandreplacedomtext';
-
 
 class Message extends React.PureComponent {
-    wechat_emoji(dom) {
-        findAndReplaceDOMText(dom, {
-            find: wechat_emoji_search,
-            replace: (portion, match) => {
-                let name = wechat_emoji_mapping[match.input.slice(match.startIndex, match.endIndex)];
-                if (!name || !name.name) return portion.text;
-                if (!wechat_emoji[name.name]) return portion.text;
-                if (portion.index) return '';
-                let img = document.createElement('img');
-                img.className = 'wechat-emoji';
-                img.src = '../' + wechat_emoji[name.name];
-                return img
-            }
-        });
-        return dom;
-    }
     componentDidUpdate(prevProps) {
-        twemoji.parse(this.wechat_emoji(ReactDOM.findDOMNode(this)));
+        twemoji.parse(ReactDOM.findDOMNode(this));
     }
     componentDidMount() {
-        twemoji.parse(this.wechat_emoji(ReactDOM.findDOMNode(this)));
+        twemoji.parse(ReactDOM.findDOMNode(this));
     }
     render() {
         const { children, ...other } = this.props;

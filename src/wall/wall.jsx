@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
 import config from '../config.json';
-import { LoginPanel, Wall, WallMessage } from '../components/index';
+import { LoginPanel, Wall, WallMessage, EmojiParser } from '../components/index';
 import './wall.css';
 
 import bgimg from './wallbg.jpg';
@@ -94,7 +94,15 @@ class App extends React.Component {
                     <div id="wall-msgs">
                         <div id="wall-counter">{this.state.counter}</div>
                         <Wall maxMessages={3} messages={this.messages} onNewMessage={()=>this.setState({counter: this.state.counter+1})}>
-                            {(msg) => <WallMessage message={msg}/>}
+                            {msg =>
+                                <WallMessage message={msg}>
+                                    {content =>
+                                        <EmojiParser>
+                                            {content}
+                                        </EmojiParser>
+                                    }
+                                </WallMessage>
+                            }
                         </Wall>
                     </div>
                 </div>

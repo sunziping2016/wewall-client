@@ -10,7 +10,7 @@ function WallMessage(props) {
             <img src={props.message.avatar || unknown_user} className="wall-message-avatar"/>
             <div className="wall-message-main">
                 <p className="wall-message-sender">{props.message.nickname || ''}</p>
-                <p className="wall-message-content">{props.message.content || ''}</p>
+                <p className="wall-message-content">{props.children ? props.children(props.message.content) : props.message.content || ''}</p>
             </div>
         </div>
     );
