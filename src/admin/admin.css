@@ -1,0 +1,124 @@
+#login-panel {
+    margin-top: 64px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 0;
+}
+.center {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+}
+
+.mdl-grid {
+    max-width: 1200px;
+    padding: 4px;
+}
+
+.mdl-cell .mdl-card {
+    width: 100%;
+    overflow: visible;
+}
+
+.mdl-card__title, .mdl-card__title-text, .mdl-tabs__tab {
+    font-size: 20px;
+}
+
+.mdl-card__title {
+    padding: 20px 24px 0;
+}
+.mdl-data-table {
+    width: 100%;
+}
+.mdl-tooltip {
+    white-space: normal;
+    line-height: 1.4;
+    text-align: left;
+    max-width: 260px;
+}
+.mdl-tooltip img {
+    margin-bottom: 10px;
+}
+
+#message-panel .mdl-card__title {
+    padding-top: 0;
+}
+
+.mdl-card__supporting-text {
+    padding: 0;
+    margin: 16px 16px;
+    width: calc(100% - 32px);
+    overflow: auto;
+}
+.mdl-card__title-text {
+    padding: 0;
+    width: 100%;
+}
+.mdl-textfield {
+    padding: 10px 0;
+}
+.mdl-textfield .mdl-textfield__label {
+    top: 14px;
+}
+.mdl-textfield .mdl-textfield__label:after {
+    bottom: 10px;
+}
+
+#main-panel {
+    z-index: 10;
+}
+#side-panel {
+    z-index: 9;
+}
+
+#message-panel {
+    z-index: 10;
+}
+
+#login-panel {
+    z-index: 9;
+}
+
+.emoji {
+    height: 1.4em;
+    padding: 2px;
+}
+
+.wechat-emoji {
+    height: 2.2em;
+}
+
+.action .mdl-button {
+    min-width: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    padding: 0;
+    color: #cccccc;
+}
+
+.accepted .mdl-button[disabled] {
+    color: green;
+}
+.rejected .mdl-button[disabled] {
+    color: red;
+}
+
+.message_content {
+    display: flex;
+}
+
+.message_content > div {
+    flex-grow:0;
+    align-self: center;
+}
+.message_content > span {
+    flex-grow:1;
+    text-align: right;
+    align-self: center;
+}

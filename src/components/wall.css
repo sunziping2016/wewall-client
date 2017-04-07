@@ -1,0 +1,11 @@
+body,html {
+    overflow: hidden;
+}
+
+#wall-container {
+    width: 100%;
+}
+
+#wall-container .wall-container-item {
+    position: absolute;
+}

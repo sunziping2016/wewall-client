@@ -1,0 +1,65 @@
+#login-panel {
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 4px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    max-width: 360px;
+    margin: 64px auto;
+    color: #444;
+}
+
+#login-panel h1 {
+    margin: 16px 8px;
+}
+
+#login-panel label {
+    font-size: 20px;
+    display: block;
+    margin-top: 12px;
+}
+
+#login-panel input {
+    width: calc(100% - 40px);
+    display: block;
+    padding: 8px 14px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    animation: all 1s ease-in-out;
+}
+#login-panel input:focus {
+    box-shadow: 0 0 8px rgba(102, 175, 233, .5);
+}
+
+#login-panel button {
+    background-color: #ddd;
+    color: #666;
+    border: none;
+    outline: none;
+    margin: 8px 20px 10px 0;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    min-width: 140px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: all 0.3s ease-in-out;
+}
+
+#login-panel .error {
+    color: red;
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+#login-panel button:hover,#login-panel button:active,#login-panel button:focus {
+    color: #222;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    border: none;
+}
+
+#login-panel button[disabled] {
+    color: #aaa;
+}

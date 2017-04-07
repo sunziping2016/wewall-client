@@ -1,0 +1,8 @@
+{
+  "default_server": "https://wx.sunziping.com/",
+
+  "wall": {
+    "username": "wall",
+    "password": ""
+  }
+}

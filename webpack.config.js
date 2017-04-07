@@ -1,38 +1,50 @@
 const path = require('path');
+const webpack = require('webpack');
 const process = require('process');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
+const WriteFilePlugin = require('write-file-webpack-plugin');
 const src = path.resolve(__dirname, 'src');
 const production = process.env.NODE_ENV == 'production';
+const extract_css = new ExtractTextPlugin('assets/stylesheet/[name]-[hash].css');
 
 module.exports = {
     context: src,
     entry: {
-        'admin/admin': path.resolve(src, 'admin/admin.jsx')
+        'admin': [
+            path.resolve(src, 'admin/admin.jsx')
+        ],
+        'wall': [
+            path.resolve(src, 'wall/wall.jsx')
+        ]
     },
     output: {
-        filename: '[name].js',
+        filename: 'assets/javascript/[name]-[hash].js',
         path: path.resolve(__dirname, 'dist'),
     },
+    devtool: 'inline-source-map',
     module: {
         loaders: [ {
                 test: /\.(css)$/,
-                loader: ExtractTextPlugin.extract({
+                loader: production ? extract_css.extract({
                     fallback: 'style-loader',
                     use: 'css-loader!postcss-loader',
-                }),
+                    publicPath: '../../'
+                }) : 'style-loader!css-loader!postcss-loader',
             }, {
                 test: /\.(js|jsx|es6)$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader?presets[]=react',
+                loader: 'babel-loader'
             }, {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+                loader: 'url-loader?limit=10000&mimetype=application/font-woff&name=assets/fonts/[name]-[hash].[ext]'
             }, {
-                test: /\.(jpg|png|gif|eot|svg|ttf)$/,
-                loader: 'file-loader?name=[name].[ext]',
+                test: /\.(eot|svg|ttf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader?name=assets/fonts/[name]-[hash].[ext]'
+            }, {
+                test: /\.(jpg|png|gif)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader?publicPath=../&name=assets/images/[name]-[hash].[ext]'
             }
         ]
     },
@@ -40,21 +52,31 @@ module.exports = {
         new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(src, 'admin/index.html'),
-            chunks: ['admin/admin'],
+            chunks: ['admin'],
             filename: 'admin/index.html',
             minify: production ? {
                     collapseWhitespace: true,
                     removeComments: true
                 } : false
         }),
-        new ExtractTextPlugin({
-            filename: '[name].css',
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: path.resolve(src, 'wall/index.html'),
+            chunks: ['wall'],
+            filename: 'wall/index.html',
+            minify: production ? {
+                    collapseWhitespace: true,
+                    removeComments: true
+                } : false
         }),
         ...(production ? [
-            new UglifyJSPlugin({
-                extractComments: true
-            })
-        ] : [])
+                extract_css,
+                new UglifyJSPlugin({
+                    extractComments: true
+                })
+            ] : [
+                //new WriteFilePlugin()
+            ])
     ],
     resolve: {
         extensions: ['.js', '.jsx', 'ex6'],

@@ -1,0 +1,64 @@
+html,body,#root,#wall {
+    height: 100%;
+    margin: 0;
+}
+
+@font-face {
+    font-family: ledFont;
+    src: url(led.ttf);
+}
+
+#wall-background {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    object-fit: cover;
+    z-index: -1;
+}
+
+#main-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#wall-info {
+    min-height: 200px;
+    flex-grow: 0;
+}
+
+#wall-info h1 {
+    float: right;
+    margin: 64px 100px 0 0;
+    font-size: 80px;
+    color: white;
+    text-shadow: 2px 3px 3px rgba(0, 0, 0, 0.9);
+}
+
+#wall-qrcode {
+    width: 220px;
+    height: auto;
+    margin: 20px 0 0 20px;
+}
+
+#wall-msgs {
+    flex-grow: 1;
+    margin: 20px 20px 20px 50px;
+    display: flex;
+    align-items: stretch;
+}
+
+#wall-counter {
+    left: 25px;
+    bottom: 25px;
+    font-size: 100px;
+    font-family: ledFont;
+    color: white;
+    text-shadow: white 2px 2px 20px;
+    position: absolute;
+}
