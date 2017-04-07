@@ -26,6 +26,16 @@ object-assign
  */
 
 /**
+ * findAndReplaceDOMText v 0.4.5
+ * @author James Padolsey http://james.padolsey.com
+ * @license http://unlicense.org/UNLICENSE
+ *
+ * Matches the text of a DOM node against a regular expression
+ * and replaces each match (or node-separated portions of the match)
+ * in the specified element.
+ */
+
+/**
  * @license
  * Copyright 2015 Google Inc. All Rights Reserved.
  *
