@@ -1,7 +1,8 @@
 import React from 'react';
 import {Icon} from 'react-fa';
 
-import "./login.css";
+import './login.css';
+import querystring from 'query-string';
 
 class LoginPanel extends React.PureComponent {
     render() {
@@ -23,6 +24,11 @@ class LoginPanel extends React.PureComponent {
                 {this.props.state ? (<button id="cancel" onClick={this.props.onCancel}>取消</button>):undefined}
             </div>
         );
+    }
+    componentDidMount() {
+        let query = querystring.parse(location.search);
+        if (query.autologin)
+            this.props.onSubmit();
     }
 }
 

@@ -1,0 +1,8 @@
+@keyframes autoscroll {
+    from {margin-left: 0; opacity: 1}
+    49% {margin-left: -100%; opacity: 1}
+    49.1% {margin-left: -100%; opacity: 0}
+    50.9% {margin-left: 100%; opacity: 0}
+    51% {margin-left: 100%; opacity: 1}
+    to {margin-left: 0; opacity: 1}
+}

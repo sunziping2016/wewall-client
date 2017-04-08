@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
 import config from '../config.json';
-import { LoginPanel, EmojiParser, Danmu } from '../components/index';
-import './danmu.css';
+import { LoginPanel } from '../components/index';
+import './bonus.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -13,19 +13,13 @@ class App extends React.Component {
         this.state = {
             login: {
                 server: config.default_server || '',
-                username: config.danmu.username || '',
-                password: config.danmu.password || '',
+                username: config.bonus.username || '',
+                password: config.bonus.password || '',
                 error: '',
                 state: false
             },
             logined: false,
         };
-        this.messages = [];
-        if (window.require) {
-            let win = window.require('electron').remote.getCurrentWindow();
-            win.setIgnoreMouseEvents(false);
-            win.setAlwaysOnTop(false);
-        }
     }
     connect() {
         if (!this.state.login.server) {
@@ -43,17 +37,6 @@ class App extends React.Component {
         this.socket.on('disconnect', () => this.setState({login:Object.assign({}, this.state.login, {state:!!this.socket.subs})}));
         this.socket.on('connect_error', err => this.setState({login:Object.assign({}, this.state.login, {error:'连接出错'})}));
         this.socket.on('authorized', data => this.handle_authorized(data));
-        this.socket.on('messages', data => {
-            data.messages.sort((a,b)=>new Date(b)-new Date(a)).forEach(msg => {
-                let user = data.users && data.users[msg.openid];
-                this.messages.push({
-                    msgid: msg.msgid,
-                    content: msg.content,
-                    color: `hsl(${360*Math.random()},100%,50%)`
-                });
-            });
-            this.forceUpdate();
-        });
     }
     handle_authorized(data) {
         if (data.error) {
@@ -61,15 +44,7 @@ class App extends React.Component {
             delete this.socket;
             this.setState({login:Object.assign({}, this.state.login, {state:false,error:data.error})});
         } else {
-            if (window.require) {
-                let win = window.require('electron').remote.getCurrentWindow();
-                win.setIgnoreMouseEvents(true);
-                win.setAlwaysOnTop(true);
-            }
-            this.setState({
-                logined: true,
-                messages: []
-            });
+            this.setState({logined: true});
         }
     }
     render() {
@@ -87,17 +62,7 @@ class App extends React.Component {
                             }}
                 />
             );
-        let danmu = (
-            <Danmu messages={this.messages}>
-                {msg=>
-                    <EmojiParser className="danmu-message" style={{color:msg.color}}>
-                        {msg.content}
-                    </EmojiParser>
-                }
-            </Danmu>
-        );
-        this.messages = [];
-        return danmu;
+        return <div />;
     }
 }
 

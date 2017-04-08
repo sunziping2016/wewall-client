@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import io from 'socket.io-client';
 
 import config from '../config.json';
-import { LoginPanel, Wall, WallMessage, EmojiParser } from '../components/index';
+import { LoginPanel, Wall, WallMessage, EmojiParser, OverflowAutoscroll } from '../components/index';
 import './wall.css';
 
 import bgimg from './wallbg.jpg';
@@ -97,9 +97,11 @@ class App extends React.Component {
                             {msg =>
                                 <WallMessage message={msg}>
                                     {content =>
-                                        <EmojiParser>
-                                            {content}
-                                        </EmojiParser>
+                                        <OverflowAutoscroll>
+                                            <EmojiParser>
+                                                {content}
+                                            </EmojiParser>
+                                        </OverflowAutoscroll>
                                     }
                                 </WallMessage>
                             }

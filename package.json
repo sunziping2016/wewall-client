@@ -10,9 +10,8 @@
   },
   "dependencies": {
     "findandreplacedomtext": "^0.4.5",
+    "query-string": "^4.3.2",
     "react": "^15.4.2",
-    "react-addons-css-transition-group": "^15.4.2",
-    "react-document-title": "^2.0.2",
     "react-dom": "^15.4.2",
     "react-fa": "^4.1.2",
     "react-mdl": "^1.9.0",

@@ -9,7 +9,6 @@ import twemoji from 'twemoji';
 class EmojiParser extends React.Component {
     render() {
         let { children, ...other } = this.props;
-        console.log(other);
         return <span {...other}>{wechat_emoji_extra(children)}</span>;
     }
     componentDidMount() {

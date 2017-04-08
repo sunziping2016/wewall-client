@@ -25,7 +25,6 @@ class Danmu extends React.Component {
                 }
             });
         }
-        //window.add_pending_messages = messages => this.add_pending_messages(messages);
     }
     add_pending_messages(messages) {
         messages.forEach(msg => {
@@ -71,33 +70,31 @@ class Danmu extends React.Component {
         }
     }
     componentDidUpdate() {
-        setTimeout(() => {
-            let dom = ReactDOM.findDOMNode(this);
-            if (!dom) return;
-            let items = dom.getElementsByClassName('initial-danmu-item');
-            if (!items.length) return;
-            let messages_active = Object.assign({}, this.state.messages_active);
-            Array.prototype.forEach.call(items, (element => {
-                let msg = Object.assign({}, messages_active[element.dataset.key]);
-                msg.width = element.clientWidth;
-                if (!msg.width) return;
-                msg.init = false;
-                element.classList.remove('initial-danmu-item');
-                msg.entered_time = (msg.width + extra_space + message_margin) / moving_speed;
-                msg.left_time = (msg.width + this.width + 2 * extra_space) / moving_speed;
-                setTimeout(() => {
-                    this.rows_state[msg.row] = false;
-                    this.check_update();
-                }, msg.entered_time * 1000);
-                setTimeout(() => {
-                    let temp = Object.assign({}, this.state.messages_active);
-                    delete temp[msg.msgid];
-                    this.setState({messages_active: temp});
-                }, msg.left_time * 1000);
-                messages_active[msg.msgid] = msg;
-            }));
-            this.setState({messages_active: messages_active});
-        }, 10);
+        let dom = ReactDOM.findDOMNode(this);
+        if (!dom) return;
+        let items = dom.getElementsByClassName('initial-danmu-item');
+        if (!items.length) return;
+        let messages_active = Object.assign({}, this.state.messages_active);
+        Array.prototype.forEach.call(items, (element => {
+            let msg = Object.assign({}, messages_active[element.dataset.key]);
+            msg.width = element.clientWidth;
+            if (!Array.prototype.every.call(element.getElementsByTagName('img'), x=>x.naturalWidth&& x.naturalHeight)) return;
+            msg.init = false;
+            element.classList.remove('initial-danmu-item');
+            msg.entered_time = (msg.width + extra_space + message_margin) / moving_speed;
+            msg.left_time = (msg.width + this.width + 2 * extra_space) / moving_speed;
+            setTimeout(() => {
+                this.rows_state[msg.row] = false;
+                this.check_update();
+            }, msg.entered_time * 1000);
+            setTimeout(() => {
+                let temp = Object.assign({}, this.state.messages_active);
+                delete temp[msg.msgid];
+                this.setState({messages_active: temp});
+            }, msg.left_time * 1000);
+            messages_active[msg.msgid] = msg;
+        }));
+        setTimeout(()=>this.setState({messages_active: messages_active}));
     }
     render() {
         if (!this.width || !this.height)

@@ -21,6 +21,9 @@ module.exports = {
         ],
         'danmu': [
             path.resolve(src, 'danmu/danmu.jsx')
+        ],
+        'bonus': [
+            path.resolve(src, 'bonus/bonus.jsx')
         ]
     },
     output: {
@@ -83,7 +86,18 @@ module.exports = {
                     collapseWhitespace: true,
                     removeComments: true
                 } : false
-        }),        new CopyWebpackPlugin([{ from: 'static' }]),
+        }),
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: path.resolve(src, 'bonus/index.html'),
+            chunks: ['bonus'],
+            filename: 'bonus/index.html',
+            minify: production ? {
+                    collapseWhitespace: true,
+                    removeComments: true
+                } : false
+        }),
+        new CopyWebpackPlugin([{ from: 'static' }]),
         ...(production ? [
                 extract_css,
                 new UglifyJSPlugin({
