@@ -50,7 +50,7 @@ class App extends React.Component {
                     msgid: msg.msgid,
                     content: msg.content,
                     nickname: user && user.nickname,
-                    avatar: user.detailed && user && user.avatar
+                    avatar: user && user.detailed && user.avatar
                 });
             });
             this.forceUpdate();
